@@ -90,7 +90,7 @@ resource "aws_autoscaling_policy" "scale_out" {
   name                   = "scale-out-policy"
   scaling_adjustment     = 1  # Increase by 1 instance
   adjustment_type        = "ChangeInCapacity"
-  cooldown              = 300
+  cooldown              = 60
   autoscaling_group_name = aws_autoscaling_group.asg.name
 }
 
@@ -111,7 +111,7 @@ resource "aws_autoscaling_policy" "scale_in" {
   name                   = "scale-in-policy"
   scaling_adjustment     = -1  # Decrease by 1 instance
   adjustment_type        = "ChangeInCapacity"
-  cooldown              = 80
+  cooldown              = 60
   autoscaling_group_name = aws_autoscaling_group.asg.name
 }
 
