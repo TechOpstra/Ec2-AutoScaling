@@ -1,4 +1,9 @@
-# VPC Configuration
+variable "region" {
+  description = "aws region"
+  type        = string
+}
+
+
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
