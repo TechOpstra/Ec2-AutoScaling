@@ -81,7 +81,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_out" {
   statistic         = "Average"
   comparison_operator = "GreaterThanThreshold"
   threshold         = var.cpu_scale_out_threshold  # Dynamic threshold
-  period           = 300
+  period           = 60
   evaluation_periods = 2
   alarm_actions     = [aws_autoscaling_policy.scale_out.arn]
 }
@@ -102,7 +102,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_in" {
   statistic         = "Average"
   comparison_operator = "LessThanThreshold"
   threshold         = var.cpu_scale_in_threshold  # Dynamic threshold
-  period           = 300
+  period           = 60
   evaluation_periods = 2
   alarm_actions     = [aws_autoscaling_policy.scale_in.arn]
 }
@@ -111,7 +111,7 @@ resource "aws_autoscaling_policy" "scale_in" {
   name                   = "scale-in-policy"
   scaling_adjustment     = -1  # Decrease by 1 instance
   adjustment_type        = "ChangeInCapacity"
-  cooldown              = 300
+  cooldown              = 80
   autoscaling_group_name = aws_autoscaling_group.asg.name
 }
 
