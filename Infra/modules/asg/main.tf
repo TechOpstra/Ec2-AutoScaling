@@ -34,7 +34,7 @@ resource "aws_security_group" "asg_sg" {
 # Launch Template for EC2 Instances
 resource "aws_launch_template" "app" {
   name_prefix   = var.lt_name
-  ami_id      = var.ami_id
+  image_id      = var.ami_id
   instance_type = var.instance_type
 
   # Enable Public IPv4 Address & Attach Security Group
