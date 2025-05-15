@@ -10,8 +10,8 @@ module "vpc" {
 module "asg" {
   source               = "./modules/asg"
   lt_name              = "Ecommerce-LT"
-  ami_id               = "ami-12345678"
-  instance_type        = "t3.micro"
+  ami_id               = "ami-084568db4383264d4"
+  instance_type        = "t2.micro"
   desired_capacity     = 2
   max_size             = 5
   min_size             = 1
@@ -19,7 +19,7 @@ module "asg" {
   tg_arn               = module.alb.tg_arn
   vpc_id               = module.vpc.vpc_id
   user_data            = filebase64("./userdata/nginx.sh")
-  cpu_scale_out_threshold = 70  # Integrated CloudWatch metrics
+  cpu_scale_out_threshold = 50  # Integrated CloudWatch metrics
   cpu_scale_in_threshold  = 30
 }
 
