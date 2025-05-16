@@ -57,3 +57,8 @@ variable "cpu_scale_in_threshold" {
   description = "CPU utilization threshold for scaling in"
   type        = number
 }
+
+variable "asg_name" {
+  description = "The name of the Auto Scaling Group to monitor"
+  type        = string
+}
