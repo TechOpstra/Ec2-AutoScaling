@@ -9,6 +9,7 @@ module "vpc" {
 # Auto Scaling Group (ASG) Module with CloudWatch integrated
 module "asg" {
   source               = "./modules/asg"
+  asg_name             = module.asg.asg_name
   lt_name              = "Ecommerce-LT"
   ami_id               = "ami-084568db4383264d4"
   instance_type        = "t2.micro"
