@@ -83,16 +83,12 @@ resource "aws_cloudwatch_metric_alarm" "scale_out" {
   threshold         = var.cpu_scale_out_threshold  # Dynamic threshold
   period           = 60
   evaluation_periods = 2
-  alarm_actions     = [aws_autoscaling_policy.scale_out.arn]
+  dimensions = {
+    AutoScalingGroupName = var.asg_name
+  }
+  alarm_actions = [aws_sns_topic.alerts.arn]
 }
 
-resource "aws_autoscaling_policy" "scale_out" {
-  name                   = "scale-out-policy"
-  scaling_adjustment     = 1  # Increase by 1 instance
-  adjustment_type        = "ChangeInCapacity"
-  cooldown              = 60
-  autoscaling_group_name = aws_autoscaling_group.asg.name
-}
 
 # CloudWatch Alarm - Scale In (Decrease instances)
 resource "aws_cloudwatch_metric_alarm" "scale_in" {
@@ -104,17 +100,21 @@ resource "aws_cloudwatch_metric_alarm" "scale_in" {
   threshold         = var.cpu_scale_in_threshold  # Dynamic threshold
   period           = 60
   evaluation_periods = 2
-  alarm_actions     = [aws_autoscaling_policy.scale_in.arn]
+  dimensions = {
+    AutoScalingGroupName = var.asg_name
+  }
+  alarm_actions = [aws_sns_topic.alerts.arn]
 }
 
-resource "aws_autoscaling_policy" "scale_in" {
-  name                   = "scale-in-policy"
-  scaling_adjustment     = -1  # Decrease by 1 instance
-  adjustment_type        = "ChangeInCapacity"
-  cooldown              = 60
-  autoscaling_group_name = aws_autoscaling_group.asg.name
+resource "aws_sns_topic" "alerts" {
+  name = "cpu-alerts-topic"
 }
 
+resource "aws_sns_topic_subscription" "email_alert" {
+  topic_arn = aws_sns_topic.alerts.arn
+  protocol  = "email"
+  endpoint  = "sbvh1437@gmail.com"  
+}
 
 output "launch_template_id" {
   description = "ID of the Launch Template used for ASG instances"
