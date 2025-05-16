@@ -7,6 +7,6 @@
 paste below content in the cputest.sh
 
 1 #!/bin/bash
-2 stress-ng --cpu 4 --timeout 600s
+2 stress-ng --cpu 1 --timeout 600s
 
 3 echo "CPU stress test completed!"
